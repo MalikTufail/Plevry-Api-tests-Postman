@@ -1,0 +1,4266 @@
+{
+	"info": {
+		"_postman_id": "b009cbed-e602-40bb-bb57-168c483dadb2",
+		"name": "Plevry",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14688253",
+		"_collection_link": "https://restless-satellite-98239.postman.co/workspace/My-Workspace~5b8acb32-405a-498f-847c-641285a1af18/collection/14688253-b009cbed-e602-40bb-bb57-168c483dadb2?action=share&creator=14688253&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Sign-Up",
+			"item": [
+				{
+					"name": "Sign up",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.include(\"Updated successfully.\");\r",
+									"});\r",
+									"pm.test(\"Verify the status\", function () {\r",
+									"    pm.expect(responseJson.status).to.eq(1);\r",
+									"});\r",
+									"pm.test(\"Verify the success\", function () {\r",
+									"    pm.expect(responseJson.success).to.eq(true);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/users/onetime-signup",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"onetime-signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gmail link Url",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.plevry.dev/api/users/onetime-login?email=test%2B5%40gmail.com&code=rl8mc91od4a",
+							"protocol": "https",
+							"host": [
+								"api",
+								"plevry",
+								"dev"
+							],
+							"path": [
+								"api",
+								"users",
+								"onetime-login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "test%2B5%40gmail.com"
+								},
+								{
+									"key": "code",
+									"value": "rl8mc91od4a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Account validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success\", function () {\r",
+									"    pm.expect(responseJson.success).to.eq(true);\r",
+									"});\r",
+									"pm.test(\"Verify the User Name/ email\", function () {\r",
+									"    pm.expect(pm.globals.get(\"user-name\")).to.include(responseJson.data.ownerId.name)\r",
+									"    pm.expect(pm.globals.get(\"email\")).to.eq(responseJson.data.ownerId.email)\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set('business-name', 'saloon +5_test')\r",
+									"pm.globals.set('user-name', 'tufail five')"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base-url}}/api/accounts",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the User Name/ email\", function () {\r",
+									"    pm.expect(pm.globals.get(\"user-name\")).to.include(responseJson.name)\r",
+									"    pm.expect(pm.globals.get(\"email\")).to.eq(responseJson.email)\r",
+									"    // pm.expect(responseJson.verificationCode).to.eq(\"vxljdpvnr5\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/auth/current",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"// pm.test(\"Response body should contain Bookings\", function () {\r",
+									"// for (var i =0; i <= responseJson.data.length; i++){\r",
+									"//     pm.expect(responseJson.data[i].start).to.be.ok.and.to.be.visible\r",
+									"// }\r",
+									"// })\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response should contains start date\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"start\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/all/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"all",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Services",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\")\r",
+									"    pm.expect(pm.response.text()).to.include('data')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/accounts/services/app/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"services",
+								"app",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\")\r",
+									"    pm.expect(pm.response.text()).to.include('data')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/all/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"all",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "weekly Hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\")\r",
+									"    pm.expect(pm.response.text()).to.include('data')\r",
+									"});  \r",
+									"pm.test(\"Response should contains user id\", function () {\r",
+									"    pm.expect(responseJson.data.userId).to.eq(\"63fa219c47166421897f12bd\")\r",
+									"});  \r",
+									"pm.test(\"Response should contains id\", function () {\r",
+									"    pm.expect(responseJson.data._id).to.eq(\"6410a88cfdb242ace3ec43ee\")\r",
+									"});\r",
+									"pm.test(\"Response should week days\", function () {\r",
+									"    pm.expect(responseJson.data.fri).to.be.an(\"array\").that.includes.members\r",
+									"    pm.expect(responseJson.data.sat).to.be.an(\"array\").that.includes.members\r",
+									"    pm.expect(responseJson.data.sun).to.be.an(\"array\").that.includes.members\r",
+									"    pm.expect(responseJson.data.mon).to.be.an(\"array\").that.includes.members\r",
+									"    pm.expect(responseJson.data.tue).to.be.an(\"array\").that.includes.members\r",
+									"    pm.expect(responseJson.data.wed).to.be.an(\"array\").that.includes.members\r",
+									"    pm.expect(responseJson.data.thu).to.be.an(\"array\").that.includes.members\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/weeklyhours",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"weeklyhours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "People",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    responseJson.data.forEach(test => {\r",
+									"        pm.expect(pm.response.text()).to.include(\"success\")\r",
+									"        pm.expect(pm.response.text()).to.include('_id')\r",
+									"        pm.expect(pm.response.text()).to.include('name')\r",
+									"        pm.expect(pm.response.text()).to.include('email')\r",
+									"        pm.expect(pm.response.text()).to.include('phoneNumber')\r",
+									"    })\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/accounts/people/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"people",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "People",
+			"item": [
+				{
+					"name": "People",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    responseJson.data.forEach(test => {\r",
+									"        pm.expect(pm.response.text()).to.include(\"success\")\r",
+									"        pm.expect(pm.response.text()).to.include('_id')\r",
+									"        pm.expect(pm.response.text()).to.include('name')\r",
+									"        pm.expect(pm.response.text()).to.include('email')\r",
+									"        pm.expect(pm.response.text()).to.include('phoneNumber')\r",
+									"    })\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/accounts/people/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"people",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "Get Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"check the categories\", function () {\r",
+									"    pm.expect(responseJson.data[0].name).to.eq(\"Group one\")\r",
+									"    pm.expect(responseJson.data[1].name).to.equal(\"Group two\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/categories/account/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"account",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"});\r",
+									"// pm.test(\"check the categories\", function () {\r",
+									"//     pm.expect(responseJson.data[0].name).to.eq(\"Category one\")\r",
+									"//     pm.expect(responseJson.data[1].name).to.equal(\"Category two\")\r",
+									"//     pm.expect(responseJson.data[2].name).to.equal(\"Category two\")\r",
+									"//     pm.expect(responseJson.data[3].name).to.equal(\"Category three\")\r",
+									"//     pm.expect(responseJson.data[4].name).to.equal(\"Category four\")\r",
+									"//     pm.expect(responseJson.data[5].name).to.equal(\"Cat bl sc\")\r",
+									"// });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/subcategories/account/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"account",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"randomCategoryName\", \"Group Api \" + Math.floor(Math.random() * 1000)+1);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\")\r",
+									"});\r",
+									"CategoryId = responseJson.data._id\r",
+									"pm.globals.set('category_id', CategoryId);\r",
+									"CategoryName = responseJson.data.name\r",
+									"pm.globals.set('catgory_Name', CategoryName)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomCategoryName}}\",\r\n    \"accountId\":\"{{account_id}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/categories",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Sub-Category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"randomSubCategoryName\", \"category Api \" + Math.floor(Math.random() * 1000)+1);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\")\r",
+									"});\r",
+									"subCategoryId = responseJson.data._id\r",
+									"subCategoryName = responseJson.data.name\r",
+									"pm.globals.set('subCategory_id', subCategoryId);\r",
+									"pm.globals.set('randomSubCategory_name', subCategoryName)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomSubCategoryName}}\",\r\n    \"categoryId\":\"{{category_id}}\",\r\n    \"accountId\":\"{{account_id}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/subcategories",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add service to group only",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\")\r",
+									"});\r",
+									"categoryId_Only = responseJson.data._id\r",
+									"categoryName_only = responseJson.data.name\r",
+									"pm.globals.set('category_service_id_only', categoryId_Only);\r",
+									"pm.globals.set('catgory_Name_only', categoryName_only)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomServiceName}}\",\r\n    \"price\":40,\r\n    \"duration\":45,\r\n    \"categoryId\":\"{{category_id}}\",\r\n    \"subCategoryId\":\"\",\r\n    \"accountId\":\"{{account_id}}\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/services",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service from Group only",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/services/{{category_service_id_only}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services",
+								"{{category_service_id_only}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Sub-Category without Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"randomSubCategoryName\", \"category Api \" + Math.floor(Math.random() * 1000)+1);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\")\r",
+									"});\r",
+									"subCategoryId = responseJson.data._id\r",
+									"pm.globals.set('subCategory_id_without_group', subCategoryId);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomSubCategoryName}}\",\r\n    \"categoryId\":\"\",\r\n    \"accountId\":\"{{account_id}}\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/subcategories",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Service to only Sub-Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\")\r",
+									"});\r",
+									"subCategoryId_Only = responseJson.data._id\r",
+									"subCategoryName = responseJson.data.name\r",
+									"pm.globals.set('subCategory_service_id_only', subCategoryId_Only);\r",
+									"// pm.globals.set('randomSubCategory_name', subCategoryName)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomServiceName}}\",\r\n    \"price\":50,\r\n    \"duration\":60,\r\n    \"categoryId\":\"\",\r\n    \"subCategoryId\":\"{{subCategory_id_without_group}}\",\r\n    \"accountId\":\"{{account_id}}\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/services",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete service with Group only",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success message\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/services/{{subCategory_service_id_only}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services",
+								"{{subCategory_service_id_only}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sub-Category without Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.data.name).to.eq(\"update sub category without group\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"update sub category without group\",\r\n    \"categoryId\":\"\",\r\n    \"accountId\":\"{{account_id}}\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/subcategories/{{subCategory_id_without_group}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategory_id_without_group}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add service to subCategory/Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"randomServiceName\", \"Service Api \" + Math.floor(Math.random() * 1000)+1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"const subCategoryName = pm.globals.get(\"randomSubCategory_name\")\r",
+									"const categoryName = pm.globals.get(\"catgory_Name\")\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains the Success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\");\r",
+									"    pm.expect(responseJson.data.subCategory.name).to.equal(subCategoryName)\r",
+									"    pm.expect(responseJson.data.category.name).to.equal(categoryName)\r",
+									"    \r",
+									"});\r",
+									"serviceId = responseJson.data._id\r",
+									"pm.globals.set('service_id_cat_subCategory', serviceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomServiceName}}\",\r\n    \"price\":20,\r\n    \"duration\":30,\r\n    \"categoryId\":\"{{category_id}}\",\r\n    \"subCategoryId\":\"{{subCategory_id}}\",\r\n    \"accountId\":\"{{account_id}}\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/services",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sub-Category in Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(responseJson.data.name).to.eq(\"cat apii\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"cat apii\",\r\n    \"categoryId\":\"{{category_id}}\",\r\n    \"accountId\":\"{{account_id}}\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/subcategories/{{subCategory_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategory_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.variables.set(\"randomCategoryName\", \"Group Api update\" + Math.floor(Math.random() * 1000) +1);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"check the name is update\", function(){\r",
+									"    pm.expect(pm.response.json().data.name).to.eq('Group Api update')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Group Api update\",\r\n    \"accountId\":\"{{account_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/categories/{{category_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{category_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sub-Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success message\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/subcategories/{{subCategory_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategory_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Group should be deleted\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/categories/{{category_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{category_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete sub-Category without Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success message\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base-url}}/api/subcategories/{{subCategory_id_without_group}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategory_id_without_group}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add service without group/category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"randomServiceName\", \"Service Api \" + Math.floor(Math.random() * 1000)+1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains the Success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq(\"Added successfully.\");\r",
+									"});\r",
+									"serviceId = responseJson.data._id\r",
+									"pm.globals.set('service_id', serviceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomServiceName}}\",\r\n    \"price\":20,\r\n    \"duration\":30,\r\n    \"categoryId\":\"\",\r\n    \"subCategoryId\":\"\",\r\n    \"accountId\":\"{{account_id}}\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/services",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Service without Category/Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"randomServiceName\", \"Service Api update \" + Math.floor(Math.random() * 1000) + 1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var randomServiceName = pm.globals.get(\"randomServiceName\");\r",
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains the Success message\", function () {\r",
+									"    pm.expect(responseJson.data.name).to.equal(randomServiceName)\r",
+									"});\r",
+									"serviceId = responseJson.data._id\r",
+									"pm.globals.set('service_id', serviceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{randomServiceName}}\",\r\n    \"price\":50,\r\n    \"duration\":45,\r\n    \"categoryId\":\"\",\r\n    \"subCategoryId\":\"\",\r\n    \"accountId\":\"{{account_id}}\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/services/{{service_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services",
+								"{{service_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service without Group/Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body Should show success message\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/services/{{service_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services",
+								"{{service_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete service from Group and Sub-Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success message\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/services/{{service_id_cat_subCategory}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"services",
+								"{{service_id_cat_subCategory}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointment",
+			"item": [
+				{
+					"name": "Availability",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base-url}}/api/availability/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"availability",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Availability Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"services\":[\"6410a8a417a285177969f704\"],\"duration\":\"\"}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/availability/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"availability",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adding appointment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(10);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T10:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('appointmentDate', finalDateTime);\r",
+									"// const currentDate = new Date();\r",
+									"// let futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// // Set the range for allowed booking hours (8:00 am to 10:00 pm)\r",
+									"// const minHour = 8;\r",
+									"// const maxHour = 22;\r",
+									"\r",
+									"// // Get the current hour and minute\r",
+									"// const currentHour = currentDate.getHours();\r",
+									"// const currentMinute = currentDate.getMinutes();\r",
+									"\r",
+									"// // Select a random hour between the allowed range\r",
+									"// const randomHour = Math.floor(Math.random() * (maxHour - minHour + 1)) + minHour;\r",
+									"\r",
+									"// // Select a random minute from 0, 15, 30, 45, or 60\r",
+									"// const randomMinute = minutes[Math.floor(Math.random() * minutes.length)];\r",
+									"// futureDate.setMinutes(randomMinute);\r",
+									"// // const randomMinute = [0, 15, 30, 45][Math.floor(Math.random() * 3)];\r",
+									"\r",
+									"// // If the random time is in the past or exceeds the maximum hour, set it to the next available hour\r",
+									"// if (randomHour === currentHour && randomMinute <= currentMinute) {\r",
+									"//   futureDate.setHours(currentHour + 1);\r",
+									"// } else if (randomHour > maxHour) {\r",
+									"//   futureDate.setHours(minHour);\r",
+									"// } else {\r",
+									"//   futureDate.setHours(randomHour);\r",
+									"// }\r",
+									"\r",
+									"// // Set the selected minute\r",
+									"// futureDate.setMinutes(randomMinute);\r",
+									"// futureDate.setSeconds(0);\r",
+									"// futureDate.setMilliseconds(0);\r",
+									"\r",
+									"// const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"// const finalDateTime = `${formattedDate}T${String(futureDate.getHours()).padStart(2, '0')}:${String(futureDate.getMinutes()).padStart(2, '0')}:00+00:00`;\r",
+									"\r",
+									"// pm.variables.set('appointmentDate', finalDateTime);\r",
+									"\r",
+									"// pm.globals.set(\"randomUserName\", \"Tufail Api user \" + Math.floor(Math.random() * 1000)+1);\r",
+									"// pm.globals.set(\"randomEmail\", \"test+\"+ Math.floor(Math.random() * 1000)+\"@gmail.com\");\r",
+									"// pm.globals.set(\"randomPhoneNo\", `${Math.floor(Math.random() * 10000000000)+1}`)\r",
+									"\r",
+									"pm.globals.set(\"randomUserName\", \"Tufail Api user \")\r",
+									"pm.globals.set(\"randomEmail\", \"test@gmail.com\");\r",
+									"pm.globals.set(\"randomPhoneNo\", `0123456789`)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"setTimeout(function() {\r",
+									"    // Your code here\r",
+									"}, 4000);\r",
+									"\r",
+									"const responseJson = pm.response.json()\r",
+									"const appointmentId = responseJson.data._id\r",
+									"pm.globals.set(\"appointment_id\", appointmentId)\r",
+									"const customer_name = responseJson.data.customerName\r",
+									"pm.globals.set(\"customerName\", customer_name)\r",
+									"const customer_email = responseJson.data.customerEmail\r",
+									"pm.globals.set(\"customerEmail\", customer_email)\r",
+									"const customer_phoneNo = responseJson.data.customerPhoneNumber\r",
+									"pm.globals.set(\"customerPhoneNo\", customer_email)\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"body contains the Success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal('Added successfully.');\r",
+									"});\r",
+									"pm.test(\"Verify the customer Name, Email, Phone#\", function () {\r",
+									"    pm.expect(responseJson.data.customerName).to.equal(pm.globals.get('randomUserName'));\r",
+									"    pm.expect(responseJson.data.customerEmail).to.equal(pm.globals.get('randomEmail'));\r",
+									"    pm.expect(responseJson.data.customerPhoneNumber).to.eq(pm.globals.get('randomPhoneNo'));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        \"6410a8a417a285177969f704\"\r\n    ],\r\n    \"start\": \"{{appointmentDate}}\",\r\n    \"name\": \"{{randomUserName}}\",\r\n    \"email\": \"{{randomEmail}}\",\r\n    \"phoneNumber\": \"{{randomPhoneNo}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user shouldn't add two bookings at the same time",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"randomUserName\", \"Tufail Api user \" + Math.floor(Math.random() * 1000)+1);\r",
+									"pm.globals.set(\"randomEmail\", \"test+\"+Math.floor(Math.random() * 1000)+\"@gmail.com\");\r",
+									"pm.globals.set(\"randomPhoneNo\", `${Math.floor(Math.random() * 10000000000)+1}`)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"pm.test(\"user shouldn't be able to add another booking at same time\", function () {\r",
+									"    pm.expect(responseJson.error).to.equal('Unable to add data.')\r",
+									"});\r",
+									"pm.test(\"response should show the Success false\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.false\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        \"6410a8a417a285177969f704\"\r\n    ],\r\n    \"start\": \"{{appointmentDate}}\",\r\n    \"name\": \"{{randomUserName}}\",\r\n    \"email\": \"{{randomEmail}}\",\r\n    \"phoneNumber\": \"{{randomPhoneNo}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update booking",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));futureDate.setHours(11);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T11:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('appointmentDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"const appointmentId = responseJson.data._id\r",
+									"pm.globals.set(\"appointment_id\", appointmentId)\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"body contains the Success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal('Updated successfully.');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": \"{{appointmentDate}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/custom/{{account_id}}/{{appointment_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"custom",
+								"{{account_id}}",
+								"{{appointment_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"setTimeout(function() {\r",
+									"    // Your code here\r",
+									"}, 4000);\r",
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body should contain success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Body should contain success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq('Appointment has been cancelled')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/cancel/{{appointment_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"cancel",
+								"{{appointment_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Added two services bookings",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(08);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T08:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('multipleServiceDate', finalDateTime);\r",
+									"\r",
+									"pm.globals.set(\"randomUserName\", \"Tufail Api user \" + Math.floor(Math.random() * 1000)+1);\r",
+									"pm.globals.set(\"randomEmail\", \"test+\"+Math.floor(Math.random() * 1000)+\"@gmail.com\");\r",
+									"pm.globals.set(\"randomPhoneNo\", `${Math.floor(Math.random() * 10000000000)+1}`)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"const doubleAppointmentId = responseJson.data._id\r",
+									"pm.globals.set('doubleAppointmentId', doubleAppointmentId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        \"6410a8a417a285177969f704\",\r\n        \"6410a8de17a285177969f70a\"\r\n    ],\r\n    \"start\": \"{{multipleServiceDate}}\",\r\n    \"name\": \"{{randomUserName}}\",\r\n    \"email\": \"{{randomEmail}}\",\r\n    \"phoneNumber\": \"{{randomPhoneNo}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel two services bookings same time",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/cancel/{{doubleAppointmentId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"cancel",
+								"{{doubleAppointmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adding Pauze",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"const pauze_id = responseJson.data._id\r",
+									"pm.globals.set('pauzeId', pauze_id)\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response should contains success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Response should contains success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.be.eq('Added successfully.');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(12);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T12:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('pauzeFutureDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"1\",\r\n    \"description\": \"test api pauze\",\r\n    \"duration\": \"30\",\r\n    \"start\": \"{{pauzeFutureDate}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/custom/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"custom",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pauze",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(12);\r",
+									"futureDate.setMinutes(45);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T12:45:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('pauzeFutureDate', finalDateTime)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"// const startTimeStr = responseJson.data.start\r",
+									"// const startTime = startTimeStr.replace(\"0Z\", \"\")\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Verify the success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq('Updated successfully.')\r",
+									"});\r",
+									"// pm.test(\"Verify the start time\", function () {\r",
+									"//     pm.expect(startTime).to.eq(pm.globals.get('pauzeFutureDate'))\r",
+									"// });\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"start\":\"{{pauzeFutureDate}}\"}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/custom/{{account_id}}/{{pauzeId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"custom",
+								"{{account_id}}",
+								"{{pauzeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleting Pauze",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body should contain success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Body should contain success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.be.eq(\"Appointment has been cancelled\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/cancel/{{pauzeId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"cancel",
+								"{{pauzeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adding Prive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"const prive_id = responseJson.data._id\r",
+									"pm.globals.set('priveId', prive_id)\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Body contains Success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.be.eq('Added successfully.')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(13);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T13:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('priveFutureDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"2\",\r\n    \"description\": \"test prive Api\",\r\n    \"duration\": \"30\",\r\n    \"start\": \"{{priveFutureDate}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/custom/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"custom",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Prive",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(13);\r",
+									"futureDate.setMinutes(45);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T13:45:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('priveFutureDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"// const startTimeStr = responseJson.data.start\r",
+									"// const startTime = startTimeStr.replace(\"0Z\", \"\")\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Verify the success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq('Updated successfully.')\r",
+									"});\r",
+									"// pm.test(\"Verify the start time\", function () {\r",
+									"//     pm.expect(startTime).to.eq(pm.globals.get('pauzeFutureDate'))\r",
+									"// });\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"start\":\"{{priveFutureDate}}\"}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/custom/{{account_id}}/{{priveId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"custom",
+								"{{account_id}}",
+								"{{priveId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Prive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Body contains Success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.be.eq('Appointment has been cancelled')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/cancel/{{priveId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"cancel",
+								"{{priveId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Widget ",
+			"item": [
+				{
+					"name": "Availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://widget.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://widget.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        \"6410a8a417a285177969f704\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/availability/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"availability",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Widget booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq('Added successfully.')\r",
+									"});\r",
+									"const widget_booking_id = responseJson.data._id\r",
+									"pm.globals.set('widgetBookingId', widget_booking_id)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 7));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(09);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T09:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('WidgetDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://widget.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://widget.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        \"6410a8a417a285177969f704\"\r\n    ],\r\n    \"start\": \"{{WidgetDate}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/customer/temp/{{account_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"customer",
+								"temp",
+								"{{account_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add booking with user details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://widget.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://widget.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Men\",\r\n    \"email\": \"test+2@gmail.com\",\r\n    \"phoneNumber\": \"0123456789\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/items/customer/checkout/{{widgetBookingId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"customer",
+								"checkout",
+								"{{widgetBookingId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel appointment Widget",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"setTimeout(function() {\r",
+									"    // Your code here\r",
+									"}, 4000);\r",
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body should contain success to be true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Body should contain success message\", function () {\r",
+									"    pm.expect(responseJson.message).to.eq('Appointment has been cancelled')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/items/owner/cancel/{{widgetBookingId}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"owner",
+								"cancel",
+								"{{widgetBookingId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "Business Name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"businessName\", \"TufailApiBusiness \" + Math.floor(Math.random() * 1000)+1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Verify the changed name\", function () {\r",
+									"    pm.expect(pm.globals.get('businessName')).to.eq(responseJson.data.name)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{businessName}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/accounts/63fa219c47166421897f12c0",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"63fa219c47166421897f12c0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Url name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"urlName\", \"saloon_5_Api\"+Math.floor(Math.random() * 1000)+1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the success true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});\r",
+									"pm.test(\"Verify the changed name\", function () {\r",
+									"    pm.expect(pm.globals.get('urlName').toLowerCase()).to.eq(responseJson.data.url.toLowerCase());\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"{{urlName}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/accounts/{{account_id}}/url",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"{{account_id}}",
+								"url"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Weekly hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify the Status true\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set('startTime', '08:00')\r",
+									"pm.globals.set('endTime', '22:00')\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mon\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"tue\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"wed\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"thu\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"fri\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"sat\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"sun\": [\r\n        {\r\n            \"start\": \"{{startTime}}\",\r\n            \"end\": \"{{endTime}}\"\r\n        }\r\n    ],\r\n    \"weeks\": 10,\r\n    \"startDate\": \"2023-06-04T00:00:00+00:00\",\r\n    \"endDate\": \"2023-08-12T00:00:00+00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/weeklyhours",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"weeklyhours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override Date and Provide Overrid Time",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 2));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(10);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T10:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('overrideDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dates\": [\r\n        {\r\n            \"date\": \"{{overrideDate}}\",\r\n            \"off\": false,\r\n            \"times\": [\r\n                {\r\n                    \"start\": \"{{startTime}}\",\r\n                    \"end\": \"{{endTime}}\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/overridedates",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"overridedates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete  override Date and override time",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dates\": []\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/overridedates",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"overridedates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Override date",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDate = new Date();\r",
+									"const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 2));\r",
+									"\r",
+									"// Set the desired time\r",
+									"futureDate.setHours(10);\r",
+									"futureDate.setMinutes(15);\r",
+									"futureDate.setSeconds(0);\r",
+									"futureDate.setMilliseconds(0);\r",
+									"\r",
+									"const formattedDate = futureDate.toISOString().split('T')[0];\r",
+									"const finalDateTime = `${formattedDate}T10:15:00+00:00`;\r",
+									"\r",
+									"pm.globals.set('overrideDate', finalDateTime);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Verify the Off to be true\", function () {\r",
+									"    pm.expect(responseJson.data.dates[0].off).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dates\": [\r\n        {\r\n            \"date\": \"{{overrideDate}}\",\r\n            \"off\": true,\r\n            \"times\": [\r\n                {\r\n                    \"start\": \"{{startTime}}\",\r\n                    \"end\": \"{{endTime}}\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/overridedates",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"overridedates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete  override Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(responseJson.success).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "api.plevry.dev"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://dashboard.plevry.dev"
+							},
+							{
+								"key": "referer",
+								"value": "https://dashboard.plevry.dev/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dates\": []\r\n}"
+						},
+						"url": {
+							"raw": "{{base-url}}/api/overridedates",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"overridedates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
