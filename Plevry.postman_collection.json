@@ -4074,7 +4074,7 @@
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.test(\"verify the Status code is 200\", function () {\r",
 									"    pm.expect(responseJson.success).to.be.true;\r",
 									"});\r",
 									"pm.test(\"Verify the Off to be true\", function () {\r",
