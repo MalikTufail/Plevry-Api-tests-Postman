@@ -4171,7 +4171,7 @@
 							"script": {
 								"exec": [
 									"const responseJson = pm.response.json()\r",
-									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.test(\"verify the Status code is 200 \", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"pm.test(\"Status code is 200\", function () {\r",
